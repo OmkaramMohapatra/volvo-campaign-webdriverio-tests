@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: volvo-campaign-tests
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: volvo-campaign-tests
+  template:
+    metadata:
+      labels:
+        app: volvo-campaign-tests
+    spec:
+      containers:
+        - name: volvo-campaign-tests
+          image: volvo-campaign-tests
+          command: ["npx", "wdio", "run", "./wdio.conf.js"]
+          env:
+            - name: SELENIUM_HOST
+              value: "selenium-hub"
+            - name: SELENIUM_PORT
+              value: "4444"
+          ports:
+            - containerPort: 4444
